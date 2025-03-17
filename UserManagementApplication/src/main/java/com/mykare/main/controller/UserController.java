@@ -54,6 +54,21 @@ public class UserController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
+	/*Accessible both by  USER and ADMIN*/
+	@GetMapping("/{email}")
+	public ResponseEntity<UserEntity> findUserByEmail(@PathVariable("email") String email) throws UserException{
+		
+		UserEntity user = userService.findUserByEmail(email);
+		
+		return new ResponseEntity<UserEntity>(user, HttpStatus.OK);
+	}
 	
+	/*Accessible both by  USER and ADMIN*/
+	@GetMapping("/signin")
+	public ResponseEntity<String> getLoggedInUserDetailsHandler(Authentication auth) throws UserException{
+		
+		UserEntity user = userService.findUserByEmail(auth.getName());
+		return new ResponseEntity<String>(user.getName()+" is Logged in successfully", HttpStatus.ACCEPTED);
+	}
 
 }
