@@ -63,5 +63,12 @@ public class UserController {
 		return new ResponseEntity<UserEntity>(user, HttpStatus.OK);
 	}
 	
+	/*Accessible both by  USER and ADMIN*/
+	@GetMapping("/signin")
+	public ResponseEntity<String> getLoggedInUserDetailsHandler(Authentication auth) throws UserException{
+		
+		UserEntity user = userService.findUserByEmail(auth.getName());
+		return new ResponseEntity<String>(user.getName()+" is Logged in successfully", HttpStatus.ACCEPTED);
+	}
 
 }
